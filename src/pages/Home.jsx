@@ -6,10 +6,7 @@ import { getPageByTitle } from "../utils/SlugUtils";
 import PageWordPressContentRender from "./[...slug]";
 
 const Home = () => {
-  const [data, setPageData] = useState(() => {
-    const cachedData = localStorage.getItem("homePageData");
-    return cachedData ? JSON.parse(cachedData) : null;
-  });
+  const [data, setPageData] = useState("")
 
   const [isDataLoaded, setIsDataLoaded] = useState(Boolean(data));
 
@@ -21,7 +18,6 @@ const Home = () => {
         const data = await getPageByTitle("home");
         console.warn(data);
         if (data) {
-          localStorage.setItem("homePageData", JSON.stringify(data));
           setPageData(data);
         }
       } catch (error) {
@@ -38,7 +34,7 @@ const Home = () => {
     <div className="home-1">
       <Header />
       <section className="wrap-accordion">
-        {data?.content ? <PageWordPressContentRender pageData={data.content} /> : <p>Loading...</p>}
+        <PageWordPressContentRender pageData={data.content} />
       </section>
       <FeaturedGames />
       <Footer />
